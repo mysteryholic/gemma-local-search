@@ -20,7 +20,7 @@ def main():
     shutil.copy2(ROOT / "README.md", stage / "README.md")
     shutil.copy2(ROOT / "THIRD_PARTY_NOTICES.md", stage / "THIRD_PARTY_NOTICES.md")
     licenses = stage / "licenses"
-    licenses.mkdir()
+    shutil.copytree(ROOT / "third-party-licenses", licenses)
     inventory = []
     for distribution in importlib.metadata.distributions():
         name = distribution.metadata["Name"]
