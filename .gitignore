@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+build/
+dist/
+release-assets/
+.DS_Store
+*.spec
+models/
+*.sqlite3

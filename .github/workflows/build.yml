@@ -1,0 +1,39 @@
+name: Desktop builds
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+jobs:
+  build:
+    permissions:
+      contents: read
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12
+      - run: uv run pytest
+        env:
+          QT_QPA_PLATFORM: offscreen
+      - run: uv run python scripts/build.py
+      - name: Check packaged runtime (macOS)
+        if: runner.os == 'macOS'
+        run: dist/GemmaLocalSearch.app/Contents/MacOS/GemmaLocalSearch --check-runtime
+      - name: Check packaged runtime (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $process = Start-Process -FilePath dist/GemmaLocalSearch/GemmaLocalSearch.exe -ArgumentList '--check-runtime' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Packaged runtime failed: $($process.ExitCode)" }
+      - run: uv run python scripts/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GemmaLocalSearch-${{ matrix.os }}
+          path: release-assets/
+          if-no-files-found: error
+          compression-level: 0

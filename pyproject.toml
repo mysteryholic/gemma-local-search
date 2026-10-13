@@ -1,0 +1,23 @@
+[project]
+name = "gemma-local-search"
+version = "0.1.0"
+description = "Offline desktop document search using Google EmbeddingGemma 2"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "sentence-transformers>=6.1",
+    "transformers>=5.18",
+    "torch",
+    "PySide6-Essentials",
+    "pypdf",
+    "numpy",
+    "huggingface-hub",
+    "pillow>=12.3.0",
+    "torchvision>=0.29.1",
+]
+
+[dependency-groups]
+dev = ["pytest", "pyinstaller"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
