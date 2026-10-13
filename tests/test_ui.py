@@ -18,6 +18,20 @@ def test_window_results_are_plain_text(tmp_path):
     window.close()
 
 
+def test_navigation_and_chat_escape_html(tmp_path):
+    app = QApplication.instance() or QApplication([])
+    window = Window(Engine(tmp_path))
+    window.nav_buttons[2].click()
+    assert window.pages.currentIndex() == 2
+    window.answered('<b>question</b>', ('<script>answer</script>', []))
+    assert '<b>question</b>' in window.transcript.toPlainText()
+    assert '<script>answer</script>' in window.transcript.toPlainText()
+    window.reset_chat()
+    assert not window.history
+    assert not window.transcript.toPlainText()
+    window.close()
+
+
 def test_background_job_restores_controls(tmp_path):
     app = QApplication.instance() or QApplication([])
     window = Window(Engine(tmp_path))

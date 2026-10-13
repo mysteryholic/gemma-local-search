@@ -2,6 +2,10 @@
 
 Google의 [EmbeddingGemma 2](https://huggingface.co/google/embeddinggemma-2)를 로컬에서 실행하는 macOS / Windows 데스크톱 앱입니다. 문서 검색, 문장 유사도 비교·임베딩 추출, 로컬 챗봇을 제공합니다. EmbeddingGemma 2가 검색과 임베딩을 담당하고, [Qwen3 0.6B](https://huggingface.co/Qwen/Qwen3-0.6B)가 대화 답변을 생성합니다.
 
+![문서 검색 화면](docs/search.png)
+
+밝은 사이드바, 둥근 카드, 여유 있는 간격과 시스템 글꼴을 사용하는 데스크톱 UI입니다.
+
 ## 실행
 
 일반 사용자는 [GitHub Releases](https://github.com/mysteryholic/gemma-local-search/releases/latest)에서 운영체제에 맞는 앱을 받습니다. 배포 앱에는 Python이 포함되어 있으므로 Python이나 uv를 별도로 설치하지 않아도 됩니다.
